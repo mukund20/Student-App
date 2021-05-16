@@ -4,6 +4,11 @@ rm -f $LOG
 G="\e[32m"
 R="\e[31m"
 N="\e[0m"
+FUSERNAME=student
+TOMCAT_VERSION=8.5.47
+TOMCAT_URL=http://apachemirror.wuchna.com/tomcat/tomcat-8/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz
+TOMCAT_HOME=/home/$FUSERNAME/apache-tomcat-${TOMCAT_VERSION}
+
 
 ### Functions
 
@@ -12,6 +17,7 @@ Head() {
 }
 
 Print() {
+    echo -e "\n\n#--------- $1 ---------#" >>$LOG 
     echo -e -n "  $1 \t\t "
 }
 
@@ -54,5 +60,42 @@ STAT_CHECK $?
 Print "Starting Nginx Service"
 systemctl enable nginx &>>$LOG 
 systemctl restart nginx &>>$LOG 
+STAT_CHECK $? 
+
+### Application Server Setup
+
+Head "APPLICATION SERVER SETUP"
+Print "Adding Functional User"
+id $FUSERNAME &>$LOG
+if [ $? -eq 0 ]; then 
+  STAT_CHECK 0 
+else 
+  useradd $FUSERNAME &>>$LOG 
+  STAT_CHECK $? 
+fi
+
+Print "Install Java\t\t" 
+yum install java -y &>>$LOG 
+STAT_CHECK $? 
+
+Print "Download Tomcat\t"
+cd /home/$FUSERNAME
+curl -s $TOMCAT_URL | tar -xz
+STAT_CHECK $? 
+
+
+Print "Download Student Application"
+cd $TOMCAT_HOME 
+curl -s https://s3-us-west-2.amazonaws.com/studentapi-cit/student.war -o webapps/student.war
+STAT_CHECK $? 
+
+Print "Download JDBC Driver\t"
+cd $TOMCAT_HOME 
+curl -s https://s3-us-west-2.amazonaws.com/studentapi-cit/mysql-connector.jar -o lib/mysql-connector.jar
+STAT_CHECK $? 
+
+Print "Update JDBC Parameters"
+cd $TOMCAT_HOME 
+sed -i -e '/TestDB/ d' -e '$ i <Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource" maxTotal="100" maxIdle="30" maxWaitMillis="10000" username="student" password="student@1" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/studentapp"/>' conf/context.xml 
 STAT_CHECK $? 
 

@@ -48,7 +48,7 @@ rm -rf /usr/share/nginx/html/* &>>$LOG
 STAT_CHECK $? 
 
 Print "Download Index files\t"
-curl -s https://studentapi-cit.s3-us-west-2.amazonaws.com/studentapp-frontend.tar.gz | tar -xz 
+curl -s https://studentapi-cit.s3-us-west-2.amazonaws.com/studentapp-frontend.tar.gz | tar -xz /usr/share/nginx/html/
 STAT_CHECK $?
 
 Print "Update nginx proxy config"

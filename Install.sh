@@ -105,7 +105,7 @@ Print "Downlaod Tomcat init script"
 curl -s https://s3-us-west-2.amazonaws.com/studentapi-cit/tomcat-init -o /etc/init.d/tomcat
 STAT_CHECK $? 
 
-Print "Load Tomcat Script to Systemd"
+Print "Load Tomcat Script to Systemd\t"
 chmod +x /etc/init.d/tomcat
 systemctl daemon-reload &>>$LOG 
 STAT_CHECK $? 

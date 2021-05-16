@@ -25,7 +25,7 @@ STAT_CHECK() {
 if [ $1 -eq 0 ]; then 
     echo -e " - ${G}SUCCESS${N}"
 else
-    echo " -  ${R}FAILURE"${N}
+    echo " - ${R}FAILURE"${N}"
     exit 1
 fi
 
@@ -47,8 +47,10 @@ Print "Clean old Index files"
 rm -rf /usr/share/nginx/html/* &>>$LOG 
 STAT_CHECK $? 
 
+cd /usr/share/nginx/html/
+
 Print "Download Index files\t"
-curl -s https://studentapi-cit.s3-us-west-2.amazonaws.com/studentapp-frontend.tar.gz | tar -xz /usr/share/nginx/html/
+curl -s https://studentapi-cit.s3-us-west-2.amazonaws.com/studentapp-frontend.tar.gz | tar -xz 
 STAT_CHECK $?
 
 Print "Update nginx proxy config"

@@ -1,6 +1,9 @@
 ### Global Variables
 LOG=/tmp/student.log
 rm -f $LOG
+G="\e[32m"
+R="\e[31m"
+N="\e[0m"
 
 ### Functions
 
@@ -9,14 +12,14 @@ Head() {
 }
 
 print() {
-    echo -e "  $1 \t\t "
+    echo -e -n "  $1 \t\t "
 }
 
 STAT_CHECK() {
 if [ $1 -eq 0 ]; then 
-    echo  " - SUCCESS"
+    echo -e " - ${G}SUCCESS${N}"
 else
-    echo " - FAILURE"
+    echo " -  ${R}FAILURE"${N}
     exit 1
 fi
 
@@ -34,3 +37,8 @@ print "INSTALL WEB SERVER"
 yum install nginx -y &>>$LOG
 STAT_CHECK $?
 
+Print "Clean old Index files\t"
+rm -rf /usr/share/nginx/html/* &>>$LOG 
+STAT_CHECK $? 
+
+  

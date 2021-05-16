@@ -37,8 +37,10 @@ Print "INSTALL WEB SERVER"
 yum install nginx -y &>>$LOG
 STAT_CHECK $?
 
-Print "Clean old Index files\t"
+Print "Clean old Index files"
 rm -rf /usr/share/nginx/html/* &>>$LOG 
 STAT_CHECK $? 
 
-  
+Print "Download Index files\t"
+curl -s https://studentapi-cit.s3-us-west-2.amazonaws.com/studentapp-frontend.tar.gz | tar -xz 
+STAT_CHECK $?

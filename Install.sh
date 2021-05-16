@@ -13,22 +13,22 @@ TOMCAT_HOME=/home/$FUSERNAME/apache-tomcat-${TOMCAT_VERSION}
 ### Functions
 
 Head() {
-    echo -e "\n\t\t\t\e[1;4;35m $1 \e[0m\n"
+  echo -e "\n\t\t\t\e[1;4;35m $1 \e[0m\n"
 }
 
 Print() {
-    echo -e "\n\n#--------- $1 ---------#" >>$LOG 
-    echo -e -n "  $1 \t\t "
+  echo -e "\n\n#--------- $1 ---------#" >>$LOG 
+  echo -e -n "  $1\t\t "
 }
 
 STAT_CHECK() {
-if [ $1 -eq 0 ]; then 
-    echo -e " - ${G}SUCCESS${N}"
-else
-    echo " - ${R}FAILURE"${N}"
-    exit 1
-fi
-
+  if [ $1 -eq 0 ]; then 
+    echo -e " - ${G}SUCCESS${N}" 
+  else 
+    echo -e " - ${R}FAILURE${N}"
+    echo -e "Refer Log :: $LOG for more info"
+    exit 1 
+  fi 
 }
 
 ## Main Program

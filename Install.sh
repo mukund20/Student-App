@@ -39,7 +39,7 @@ if [ $USER_ID -ne 0 ]; then
 fi
 
 Head "WEB SERVER SETUP"
-Print "INSTALL WEB SERVER"
+Print "INSTALL WEB SERVER\t"
 yum install nginx -y &>>$LOG
 STAT_CHECK $?
 

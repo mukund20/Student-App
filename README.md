@@ -2,7 +2,7 @@
 
 #!/bin/bash 
 
-## Purpose: Setup Student Application with Web + App + DB Componenets 
+##** Purpose: Setup Student Application with Web + App + DB Componenets **
 ## Project: StudentApp
 ## Author:  Mukund Tolay
 

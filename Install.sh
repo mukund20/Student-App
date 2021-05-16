@@ -27,7 +27,7 @@ fi
 
 ## Main Program
 USER_ID = $(id -u)
-if [ $USER_ID-nq 0 ]; then 
+if [ $USER_ID -ne 0 ]; then 
     echo- -e " You Should be root user to proceed!!"
     exit 1
 fi

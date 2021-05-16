@@ -8,8 +8,9 @@ Head() {
     echo -e "\n\t\t\t\e[35m $1 \e[0m\n"
 }
 
+## Main Program
 
-echo "WEB SERVER SETUP"
+Head "WEB SERVER SETUP"
 echo -n "INSTALL WEB SERVER"
 
 yum install nginx -y &>>$LOG

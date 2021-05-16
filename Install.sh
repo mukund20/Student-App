@@ -1,5 +1,5 @@
 
-LOG= /tmp/student.log
+LOG=/tmp/student.log
 rm -f $LOG
 
 echo "WEB SERVER SETUP"
